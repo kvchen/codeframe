@@ -1,0 +1,11 @@
+{
+	"name": "hello-world",
+	"description": "hello world test app",
+	"version": "0.0.1",
+	"private": true,
+	"dependencies": {
+		"express": "4.8.6", 
+		"dockerode": "2.0.3", 
+		"swig": "1.4.2"
+	}
+}
