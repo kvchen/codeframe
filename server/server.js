@@ -1,24 +1,30 @@
-var express = require('express');
-var swig = require('swig');
-var dockerode = require('dockerode');
-var docker = new dockerode({socketPath: '/var/run/docker.sock'});
+var express = require('express'), 
+	bodyParser = require('body-parser'), 
+	logger = require('morgan'), 
+	passport = require('passport'), 
+	swig = require('swig'), 
+	dockerode = require('dockerode');
 
-// Create an instance of the Node app
+
+// Create servers for both the app and the API
 var app = express();
+var api = express();
 
 app.engine('html', swig.renderFile);
 app.use(express.static(__dirname + '/public'));
 
 app.set('view engine', 'html');
-app.set('views', __dirname + '/views');
+app.set('views', './views');
 
 
 // Define routes
-var auth = require(__dirname + '/routes/auth')
-var environment = require(__dirname + '/routes/environment')
+var auth = require('./routes/auth')
+var environment = require('./routes/environment')
 
-app.post('/auth/token', auth.token);
-app.post('/environment/run', environment.run);
+api.post('/auth/token', auth.token);
+api.post('/environment/run', 
+	passport.authenticate('bearer', { session: false }), 
+	environment.run);
 
 
 // Start the server
