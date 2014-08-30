@@ -1,6 +1,6 @@
 {
-	"name": "hello-world",
-	"description": "hello world test app",
+	"name": "arbiter",
+	"description": "web platform for safely executing arbitrary code",
 	"version": "0.0.1",
 	"private": true,
 	"dependencies": {

@@ -3,7 +3,6 @@ var swig = require('swig');
 var dockerode = require('dockerode');
 var docker = new dockerode({socketPath: '/var/run/docker.sock'});
 
-
 // Create an instance of the Node app
 var app = express();
 
