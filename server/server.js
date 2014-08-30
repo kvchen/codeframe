@@ -15,8 +15,11 @@ app.set('views', __dirname + '/views');
 
 
 // Define routes
+var auth = require(__dirname + '/routes/auth')
 var environment = require(__dirname + '/routes/environment')
-app.get('/environment/run', environment.run);
+
+app.post('/auth/token', auth.token);
+app.post('/environment/run', environment.run);
 
 
 // Start the server
