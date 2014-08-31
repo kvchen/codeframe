@@ -53,7 +53,6 @@ exports.run = function(req, res) {
 				var output = "";
 
 				stream.on('data', function(chunk) {
-					console.log(chunk.toString());
 					output += chunk.toString();
 				});
 
