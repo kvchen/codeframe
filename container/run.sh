@@ -1,8 +1,6 @@
 language=$1
 prog=$2
 
-ls -la /opt/code
-
 if [ -z $2 ]; then
 	echo "No file provided!"
 	exit 1
