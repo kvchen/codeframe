@@ -3,17 +3,19 @@
 	"description": "web platform for safely executing arbitrary code",
 	"version": "0.0.1",
 	"private": true,
+	"scripts": {
+		"start": "./node_modules/coffee-script/bin/coffee ./bin/www.coffee"
+	}, 
 	"dependencies": {
+		"coffee-script": "latest", 
 		"express": "4.8.6", 
 		"body-parser": "1.6.7", 
 		"dockerode": "2.0.3", 
 		"fs-extra": "0.11.0", 
+		"morgan": "1.2.2", 
 		"node-uuid": "1.4.1", 
 		"sanitize-filename": "1.1.1", 
-		"swig": "1.4.2", 
-		"oauth2orize": "1.0.1", 
 		"passport": "0.2.0", 
-		"passport-http-bearer": "1.0.1", 
 		"winston": "0.7.3"
 	}
 }
