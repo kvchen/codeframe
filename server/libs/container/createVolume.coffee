@@ -6,10 +6,10 @@ uuid        = require "node-uuid"
 module.exports = (files, cb) ->
 	basePath = path.dirname(require.main.filename)
 	volume = path.join basePath, 'uploads', uuid.v4()
-	fs.ensureDirSync(volume)
-
-	for file in files
-		filename = sanitize file.name
-		fs.writeFileSync path.join(volume, filename), file.code
-
-	cb(null, volume)
+	fs.ensureDir volume, (err) ->
+		unwrittenFileCount = files.length
+		for file in files
+			filename = sanitize file.name
+			fs.writeFile path.join(volume, filename), file.code, (err) ->
+				unwrittenFileCount--
+				cb(null, volume) if unwrittenFileCount == 0
