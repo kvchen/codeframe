@@ -2,7 +2,7 @@
 .DS_Store
 
 # Uploaded environments
-server/uploads/*
+server/bin/uploads/*
 
 # Logs
 logs

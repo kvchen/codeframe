@@ -15,7 +15,6 @@ case "$language" in
 	"python2")
 		python2 $prog
 		;;
-
 	"python" | "python3")
 		python3 $prog
 		;;

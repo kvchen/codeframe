@@ -5,6 +5,7 @@ winston = require "winston"
 
 docker = new Docker
 	socketPath: "/var/run/docker.sock"
+winston.info("Docker client successfully initialized")
 
 module.exports = (language, entrypoint, volume, cb) ->
 	containerOptions = 
@@ -43,9 +44,14 @@ module.exports = (language, entrypoint, volume, cb) ->
 							cb err, null
 						else
 							output = ""
+							chunksRead = 0
 
 							stream.on "data", (chunk) ->
 								output += chunk.toString()
+								chunksRead++
+								if (chunksRead > 20)
+									output += "\n\n[Output truncated]"
+									stream.destroy()
 
 							stream.on "end", () ->
 								fs.remove volume
