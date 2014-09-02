@@ -50,7 +50,7 @@ module.exports = (language, entrypoint, volume, cb) ->
               stream.on "data", (chunk) ->
                 output += chunk.toString()
                 chunksRead++
-                if (chunksRead > 20)
+                if (chunksRead > 50)
                   output += "\n\n[Output truncated]"
                   stream.destroy()
 
@@ -59,8 +59,7 @@ module.exports = (language, entrypoint, volume, cb) ->
 
                 container.inspect (err, data) ->
                   exitCode = data.State.ExitCode
-                  console.log exitCode
 
-                  container.remove {force: true}, (err, data) ->
+                  container.remove force: true, (err, data) ->
                     winston.info "Container %s removed", container.id
                   cb null, exitCode, output
