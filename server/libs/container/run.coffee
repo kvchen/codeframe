@@ -3,8 +3,11 @@ fs    = require "fs-extra"
 path  = require "path"
 winston = require "winston"
 
+socket = process.env.DOCKER_SOCKET || '/var/run/docker.sock';
+
 docker = new Docker
-  socketPath: "/var/run/docker.sock"
+  socketPath: socket
+
 winston.info("Docker client successfully initialized")
 
 module.exports = (language, entrypoint, volume, cb) ->
@@ -61,11 +64,10 @@ module.exports = (language, entrypoint, volume, cb) ->
                   stream.destroy()
 
               stream.on "end", () ->
-                fs.remove volume
-
                 container.inspect (err, data) ->
                   exitCode = data.State.ExitCode
 
                   container.remove force: true, (err, data) ->
+                    fs.remove volume
                     winston.info "Container %s removed", container.id
                   cb null, exitCode, output
