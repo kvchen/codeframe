@@ -1,7 +1,7 @@
-express 	= require "express"
-bodyParser 	= require "body-parser"
-passport	= require "passport"
-winston 	= require "winston"
+express     = require "express"
+bodyParser  = require "body-parser"
+passport    = require "passport"
+winston     = require "winston"
 
 
 # Define the Express app
@@ -10,8 +10,16 @@ app = express()
 app.use express.static(__dirname + '/public')
 app.use bodyParser.json()
 
+# Initialize templating engine
+app.set 'views', __dirname + '/views'
+app.set 'view engine', 'jade'
 
-# Define route endpoints
+
+# Define view endpoints
+app.get '/', (req, res) ->
+  res.render 'index'
+
+# Define API endpoints
 environment = require "./routes/environment"
 app.post '/api/environment/run', environment.run
 

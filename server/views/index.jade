@@ -1,0 +1,42 @@
+doctype html
+
+html(lang="en")
+  head
+    title=Arbiter
+    link(href="/css/bootstrap.css", rel="stylesheet", type="text/css")
+    link(href="/css/nprogress.css", rel="stylesheet", type="text/css")
+
+    link(href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css", rel="stylesheet", type="text/css")
+    link(href="http://fonts.googleapis.com/css?family=Kaushan+Script|Open+Sans:400,300", rel="stylesheet", type="text/css")
+
+  body(class="flex-layout")
+    header Arbiter
+      a(href="#", class="to-clipboard pull-right")
+        i(class="fa fa-icon fa-bars")
+    .flex-layout-body
+      .flex-layout-editor
+        .nav Editor
+        #editor # Your code goes here
+
+      main(class="flex-layout-content")
+        .nav
+          span Run as
+          a(class="toggle-python") Python
+          span /
+          a(href="#", class="toggle-scheme") Scheme
+          span /
+          a(href="#", class="toggle-logic") Logic
+        #output-container
+  
+    script(src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js")
+    script(src="/js/ace/ace.js" type="text/javascript", charset="utf-8")
+    script(src="/js/arbiter.js" type="text/javascript")
+    script(src="/js/nprogress.js" type="text/javascript")
+
+  footer Made by 
+    a(href="http://keff.me", target="_blank") Kevin Chen
+    p for
+    a(href="http://cs61a.org", target="_blank") CS61A
+    p with
+    a(href="https://www.gittip.com/kvchen", target="_blank") 
+      i(class="fa fa-icon fa-heart")
