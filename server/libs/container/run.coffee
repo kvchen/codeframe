@@ -31,17 +31,18 @@ module.exports = (language, entrypoint, volume, cb) ->
 
   docker.createContainer containerOptions, (err, container) ->
     winston.info "Container %s created", container.id
+
     if err
-      cb err, null
+      cb err, null, null
     else
       container.attach attachOptions, (err, stream) ->
         if err
-          cb err, null
+          cb err, null, null
         else
           stream.setEncoding "utf-8"
           container.start startOptions, (err, data) ->
             if err
-              cb err, null
+              cb err, null, null
             else
               output = ""
               chunksRead = 0
@@ -50,12 +51,16 @@ module.exports = (language, entrypoint, volume, cb) ->
                 output += chunk.toString()
                 chunksRead++
                 if (chunksRead > 20)
-                  winston.info "Output length exceeded in container %s", container.id
                   output += "\n\n[Output truncated]"
                   stream.destroy()
 
               stream.on "end", () ->
                 fs.remove volume
-                container.remove {force: true}, (err, data) ->
-                  winston.info "Container %s removed", container.id
-                cb null, output
+
+                container.inspect (err, data) ->
+                  exitCode = data.State.ExitCode
+                  console.log exitCode
+
+                  container.remove {force: true}, (err, data) ->
+                    winston.info "Container %s removed", container.id
+                  cb null, exitCode, output
