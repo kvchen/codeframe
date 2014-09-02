@@ -10,6 +10,8 @@ docker = new Docker
 
 winston.info("Docker client successfully initialized")
 
+containerTimeout = 10000
+
 module.exports = (language, entrypoint, volume, cb) ->
   containerOptions = 
     Image: "runner"
@@ -54,12 +56,12 @@ module.exports = (language, entrypoint, volume, cb) ->
               setTimeout (() ->
                 stream.destroy()
                 output += "\n\n[Process timed out]"), 
-                5000
+                containerTimeout
 
               stream.on "data", (chunk) ->
                 output += chunk.toString()
                 chunksRead++
-                if (chunksRead > 50)
+                if (chunksRead > 100)
                   output += "\n\n[Output truncated]"
                   stream.destroy()
 

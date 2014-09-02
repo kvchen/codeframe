@@ -3,6 +3,7 @@ MAINTAINER Kevin Chen <kvchen@berkeley.edu>
 
 RUN apt-get update
 RUN apt-get install -y python python3 racket
+RUN raco planet install dyoo simply-scheme.plt 2 2
 RUN racket -p dyoo/simply-scheme:2:2
 
 ADD entrypoint.sh entrypoint.sh
