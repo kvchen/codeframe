@@ -10,6 +10,7 @@ winston.info("Docker client successfully initialized")
 module.exports = (language, entrypoint, volume, cb) ->
   containerOptions = 
     Image: "runner"
+    Memory: 50e6
     DisableNetwork: true
     Cmd: [
       language
