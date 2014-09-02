@@ -47,6 +47,11 @@ module.exports = (language, entrypoint, volume, cb) ->
               output = ""
               chunksRead = 0
 
+              setTimeout (() ->
+                stream.destroy()
+                output += "\n\n[Process timed out]"), 
+                5000
+
               stream.on "data", (chunk) ->
                 output += chunk.toString()
                 chunksRead++
