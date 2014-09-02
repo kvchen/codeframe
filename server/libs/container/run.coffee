@@ -55,4 +55,5 @@ module.exports = (language, entrypoint, volume, cb) ->
 
 							stream.on "end", () ->
 								fs.remove volume
+								container.remove
 								cb null, output
