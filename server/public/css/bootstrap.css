@@ -10,7 +10,7 @@ header {
     height: 60px;
     background: #E74C3C;
     color: #fff;
-    text-transform: capitalize;
+    text-transform: lowercase;
     line-height: 59px;
     padding: 0 20px;
     letter-spacing: 1px;
