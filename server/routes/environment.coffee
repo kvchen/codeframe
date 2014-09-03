@@ -5,19 +5,23 @@ exports.run = (req, res, next) ->
   env = req.body
 
   container.createVolume env.files, (err, volume) ->
-    container.run env.language, env.entrypoint, volume, (err, exitCode, output) ->
-      if err
-        res.json
-          status: "failure"
-          reason: err
-      else
-        if exitCode != 0
+    if err
+
+    else
+      winston.info("Created file volume")
+      container.run env.language, env.entrypoint, volume, (err, exitCode, output) ->
+        if err
           res.json
             status: "failure"
-            exitCode: exitCode
-            output: output
+            reason: err
         else
-          res.json
-            status: "success"
-            exitCode: exitCode
-            output: output
+          if exitCode != 0
+            res.json
+              status: "failure"
+              exitCode: exitCode
+              output: output
+          else
+            res.json
+              status: "success"
+              exitCode: exitCode
+              output: output
