@@ -1,6 +1,8 @@
 Codeframe
 ==========
 
+[![Build Status](https://travis-ci.org/kvchen/codeframe.svg?branch=master)](https://travis-ci.org/kvchen/codeframe)
+
 ## Overview
 
 [Codeframe](http://codefra.me) is a web platform designed to run arbitrary code in a semi-secure manner. It utilizes Docker in order to jail code execution containers and prevent code from interacting with the host.
