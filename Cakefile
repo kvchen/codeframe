@@ -2,7 +2,7 @@ fs     = require "fs"
 path   = require "path"
 {exec} = require "child_process"
 
-REPORTER = "nyan"
+REPORTER = "List"
 
 option "-t", "--test [TEST]", "a test to run"
 
