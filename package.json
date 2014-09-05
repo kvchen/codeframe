@@ -1,0 +1,30 @@
+{
+  "name": "codeframe",
+  "description": "web platform for safely executing arbitrary code",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "./node_modules/.bin/coffee ./bin/www.coffee",
+    "test": "./node_modules/.bin/cake test"
+  },
+  "devDependencies": {
+    "chai": "^1.9.1",
+    "mocha": "^1.21.4",
+    "should": "^4.0.4",
+    "supertest": "^0.13.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.7.0",
+    "coffee-script": "^1.8.0",
+    "dockerode": "^2.0.3",
+    "express": "^4.8.8",
+    "fs-extra": "^0.11.1",
+    "jade": "^1.6.0",
+    "joi": "^4.6.2",
+    "morgan": "^1.3.0",
+    "node-uuid": "^1.4.1",
+    "passport": "^0.2.1",
+    "sanitize-filename": "^1.1.1",
+    "winston": "^0.7.3"
+  }
+}

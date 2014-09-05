@@ -1,6 +1,7 @@
 Docker   = require "dockerode"
 
 fs       = require "fs-extra"
+Joi      = require "joi"
 path     = require "path"
 sanitize = require "sanitize-filename"
 winston  = require "winston"
