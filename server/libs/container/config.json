@@ -1,0 +1,11 @@
+{
+  "image": "runner", 
+  "disableNetwork": true, 
+  "memory": 50e6, 
+  "timeout": 1e4, 
+  "env": "/opt/code", 
+  "output": {
+    "stdout": true, 
+    "stderr": true
+  }
+}

@@ -1,0 +1,17 @@
+{
+	"language": "python3", 
+	"entrypoint": "foo.py", 
+	"files": [
+		{
+			"name": "foo.py",
+			"contents": "from bar.baz import qux\nqux()"
+		}, 
+		{
+			"name": "bar", 
+			"contents": [
+				{"name": "__init__.py", "contents": ""}, 
+				{"name": "baz.py", "contents": "def qux():\n  print(\"qux!\")"}
+			]
+		}
+	]
+}

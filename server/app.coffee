@@ -20,6 +20,8 @@ app.get '/', (req, res) ->
   res.render 'index'
 
 # Define API endpoints
+auth = require "./routes/auth"
+
 environment = require "./routes/environment"
 app.post '/api/environment/run', environment.run
 
