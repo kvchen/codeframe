@@ -9,17 +9,17 @@ uuid     = require "node-uuid"
 
 config   = require "./config.json"
 
+if process.env.NODE_ENV isnt 'test'
+  # Make sure the Docker client is running, or throw an error!
+  socket = process.env.DOCKER_SOCKET || '/var/run/docker.sock';
+  docker = new Docker 
+    socketPath: socket
 
-# Make sure the Docker client is running, or throw an error!
-socket = process.env.DOCKER_SOCKET || '/var/run/docker.sock';
-docker = new Docker 
-  socketPath: socket
-
-status = fs.statSync(socket);
-if !status.isSocket()
-  winston.error "Docker client failed to start!"
-else
-  winston.info "Docker client successfully instantiated"
+  status = fs.statSync(socket);
+  if !status.isSocket()
+    winston.error "Docker client failed to start!"
+  else
+    winston.info "Docker client successfully instantiated"
 
 
 runContainer = (language, entrypoint, volume, cb) -> 
