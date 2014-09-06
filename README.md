@@ -34,9 +34,7 @@ Allows users to run both short code snippets and longer, more comprehensive code
 
 ## Installation
 
-1. Navigate to the `/container` directory
-2. Run `docker build -t runner .`
-3. Go to the `/server` directory
+1. Run `cake build` to build a local copy of the Docker image
 4. Run `npm install` to install all dependencies
 5. Run `npm start` to start the server
 

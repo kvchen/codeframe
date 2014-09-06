@@ -44,19 +44,21 @@ runContainer = (language, entrypoint, volume, cb) ->
 
   docker.createContainer createOptions, (err, container) ->
     winston.info "%s: Container created", container.id
-    return cb err if err?
+    return cb err if err
 
     container.attach attachOptions, (err, stream) ->
-      return cb err if err?
+      return cb err if err
 
       container.start startOptions, (err, data) ->
-        return cb err if err?
+        return cb err if err
 
         output = ""
         chunksRead = 0
+        timedOut = false
 
         timeout = setTimeout (() ->
           winston.warn "%s: Code timed out", container.id
+          timedOut = true
           stream.destroy()
         ), config.timeout
 
@@ -69,13 +71,17 @@ runContainer = (language, entrypoint, volume, cb) ->
 
         stream.on "end", () ->
           clearTimeout timeout
-          container.inspect (err, data) ->
-            return cb err if err?
+          container.inspect (err, containerData) ->
+            return cb err if err
 
-            exitCode = data.State.ExitCode
             container.remove force: true, (err, data) ->
               winston.info "%s: Container removed", container.id
-              cb null, exitCode, output
+
+              resData = 
+                timedOut: timedOut
+                exitCode: containerData.State.ExitCode
+                output: output
+              cb null, resData
 
 
 createVolume = (files, cb) ->
@@ -87,50 +93,46 @@ createVolume = (files, cb) ->
   basePath = path.dirname(require.main.filename)
   volume = path.join basePath, 'uploads', envUUID
 
-  writeVolume volume, 0, files, (err) ->
-    return cb err if err?
+  fileSchema = Joi.object().keys
+    name: Joi.string().alphanum().min(1).max(255).required()
+    contents: [Joi.string(), Joi.array()],
+
+  writeVolume volume, 0, files, fileSchema, (err) ->
+    return cb err if err
     cb null, volume
 
 
-writeVolume = (dir, depth, files, cb) ->
+writeVolume = (dir, depth, files, fileSchema, cb) ->
   fs.ensureDir dir, (err) ->
-    return cb err if err?
+    return cb err if err
 
     winston.info "Created directory %s", dir
 
     if depth > 10
       return cb new Error "Maximum recusion depth exceeded"
 
-    if !files instanceof Array
-      return cb new Error "Files not formatted as list"
+    folderSchema = Joi.array().includes(fileSchema)
+    Joi.validate files, folderSchema, (err, value) ->
+      return cb err if err
 
-    unwrittenContents = files.length
-    for file in files
-      if !(file.name and typeof file.name == 'string')
-        return cb new Error "No name supplied for file or folder"
-      
-      if !file.contents?
-        return cb new Error "No contents supplied for file or folder"
+      unwrittenContents = files.length
+      for file in files
+        filename = sanitize file.name
 
-      filename = sanitize file.name
-      if typeof file.contents == 'string'
-        fs.writeFile path.join(dir, filename), file.contents, (err) ->
-          return cb err if err?
-          winston.info "Wrote file %s", path.join(dir, filename)
+        # Treat nested arrays like folders
+        if file.contents instanceof Array
+          writeVolume path.join(dir, filename), depth+1, file.contents, (err) ->
+            return cb err if err
+            
+            if --unwrittenContents == 0
+              cb null
+        else
+          fs.writeFile path.join(dir, filename), file.contents, (err) ->
+            return cb err if err
+            winston.info "Wrote file %s", path.join(dir, filename)
 
-          if --unwrittenContents == 0
-            cb null
-
-      # Treat nested arrays like folders
-      else if file.contents instanceof Array
-        writeVolume path.join(dir, filename), depth+1, file.contents, (err) ->
-          return cb err if err?
-          
-          if --unwrittenContents == 0
-            cb null
-      else
-        return cb new Error "Unrecognized file type"
-
+            if --unwrittenContents == 0
+              cb null
 
 exports.createVolume = createVolume
 exports.run = runContainer

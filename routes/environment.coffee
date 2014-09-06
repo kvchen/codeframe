@@ -16,27 +16,25 @@ exports.run = (req, res, next) ->
     if err
       winston.warn "Malformed request: %s", err.message
       res.status(400).json
-        status: "fail"
+        status: "failure"
         message: err.message
     else
       container.createVolume env.files, (err, volume) ->
         if err
           winston.error "Failed to create file volume: %s", err.message
           res.status(400).json
-            status: "fail"
+            status: "failure"
             message: err.message
         else
-          container.run env.language, env.entrypoint, volume, (err, exitCode, output) ->
+          container.run env.language, env.entrypoint, volume, (err, data) ->
             if err
               res.status(500).json
-                status: "fail"
+                status: "failure"
                 message: err.message
             else
               res.status(200).json
                 status: "success"
-                data:
-                  exitCode: exitCode
-                  output: output
+                data: data
 
             fs.remove volume, (err) ->
               if err
