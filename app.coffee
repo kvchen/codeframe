@@ -1,7 +1,10 @@
-express     = require "express"
-bodyParser  = require "body-parser"
-passport    = require "passport"
-winston     = require "winston"
+express    = require "express"
+bodyParser = require "body-parser"
+passport   = require "passport"
+winston    = require "winston"
+
+if process.env.NODE_ENV is 'test'
+  winston.remove winston.transports.Console
 
 
 # Define the Express app

@@ -43,4 +43,4 @@ Allows users to run both short code snippets and longer, more comprehensive code
 
 ## Special Thanks
 
-* [Sumukh Sridhara](https://github.com/Sumukh)
+* [Sumukh Sridhara](https://github.com/Sumukh) for providing hosting!
