@@ -15,3 +15,11 @@ task "test", "run all tests or a specified test", (options) ->
     exec mocha, (err, output) ->
       console.log err if err
       console.log output
+
+task "build", "compile all dependencies", (options) -> 
+  docker = "docker build -t runner ./docker"
+
+  exec "NODE_ENV=build", ->
+    exec docker, (err, output) ->
+      console.log err if err
+      console.log output
