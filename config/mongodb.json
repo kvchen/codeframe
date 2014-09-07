@@ -1,0 +1,4 @@
+{
+  "uri": "mongodb://localhost/codeframe", 
+  "port" : 1337
+}

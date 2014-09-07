@@ -8,7 +8,6 @@ task "test", "run all tests or a specified test", (options) ->
   mocha = "./node_modules/.bin/mocha
     --compilers coffee:coffee-script/register
     --require coffee-script 
-    --require test/helpers/assert_helper.coffee
     --colors"
   
   exec "NODE_ENV=test", ->

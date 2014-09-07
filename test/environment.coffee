@@ -1,19 +1,20 @@
 process.env.NODE_ENV = "test"
+app = require "../app"
 
-app     = require "../app"
+# Require HTTP testing modules
 request = require "supertest"
-should  = require "should"
+should = require "should"
 
 # All tests involving running containers have been disabled
 
-ENDPOINT = "/api/environment/run"
-
 describe "POST /api/environment/run with invalid language", ->
   it "should return 400 and status fail", (done) ->
-    envInvalidLanguage = require "./requests/env_invalid_language.json"
     request(app)
-      .post ENDPOINT
-      .send envInvalidLanguage
+      .post "/api/environment/run"
+      .send
+        language: "foobarbaz"
+        entrypoint: "ep"
+        files: []
       .end (err, res) ->
         should.not.exist err
         res.status.should.equal 400
@@ -22,10 +23,18 @@ describe "POST /api/environment/run with invalid language", ->
 
 describe "POST /api/environment/run with malformed files", ->
   it "should return 400 and status fail", (done) ->
-    envInvalidFiles = require "./requests/env_invalid_files.json"
     request(app)
-      .post ENDPOINT
-      .send envInvalidFiles
+      .post "/api/environment/run"
+      .send
+        language: "python3"
+        entrypoint: "main.py"
+        files: [
+          name: "foo.py"
+          contents: "from bar.baz import qux\nqux()"
+          ,
+          name: "bar", 
+          contents: {"name": "__init__.py", "contents": ""}
+        ]
       .end (err, res) ->
         should.not.exist err
         res.status.should.equal 400

@@ -1,13 +1,12 @@
 container = require "../libs/container"
-config    = require "../config.json"
+languages = require "../config/languages.json"
 
-fs        = require "fs-extra"
 Joi       = require "joi"
 winston   = require "winston"
 
 exports.run = (req, res, next) ->
   schema = Joi.object().keys
-    language: Joi.valid(config.languages).required()
+    language: Joi.valid(languages).required()
     entrypoint: Joi.string().required()
     files: Joi.array().includes(Joi.object()).required()
 
@@ -35,9 +34,3 @@ exports.run = (req, res, next) ->
               res.status(200).json
                 status: "success"
                 data: data
-
-            fs.remove volume, (err) ->
-              if err
-                winston.error "Failed to remove directory %s", volume
-
-
