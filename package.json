@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "start": "./node_modules/.bin/coffee ./bin/www.coffee",
-    "test": "./node_modules/.bin/cake test"
+    "test": "./node_modules/.bin/mocha --compilers coffee:coffee-script/register --require coffee-script --colors"
   },
   "devDependencies": {
     "chai": "^1.9.1", 

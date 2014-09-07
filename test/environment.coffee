@@ -7,8 +7,8 @@ should = require "should"
 
 # All tests involving running containers have been disabled
 
-describe "POST /api/environment/run with invalid language", ->
-  it "should return 400 and status fail", (done) ->
+describe "POST /api/environment/run with invalid request", ->
+  it "should return 406 and status fail", (done) ->
     request(app)
       .post "/api/environment/run"
       .send
@@ -17,12 +17,12 @@ describe "POST /api/environment/run with invalid language", ->
         files: []
       .end (err, res) ->
         should.not.exist err
-        res.status.should.equal 400
+        res.status.should.equal 406
         res.body.status.should.equal "failure"
         done()
 
 describe "POST /api/environment/run with malformed files", ->
-  it "should return 400 and status fail", (done) ->
+  it "should return 500 and status fail", (done) ->
     request(app)
       .post "/api/environment/run"
       .send
@@ -37,7 +37,7 @@ describe "POST /api/environment/run with malformed files", ->
         ]
       .end (err, res) ->
         should.not.exist err
-        res.status.should.equal 400
+        res.status.should.equal 500
         res.body.status.should.equal "failure"
         done()
 

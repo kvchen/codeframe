@@ -14,14 +14,14 @@ exports.run = (req, res, next) ->
   Joi.validate env, schema, (err, value) ->
     if err
       winston.warn "Malformed request: %s", err.message
-      res.status(400).json
+      res.status(406).json
         status: "failure"
         message: err.message
     else
       container.createVolume env.files, (err, volume) ->
         if err
           winston.error "Failed to create file volume: %s", err.message
-          res.status(400).json
+          res.status(500).json
             status: "failure"
             message: err.message
         else
