@@ -1,5 +1,5 @@
 language=$1
 prog=$2
 
-chmod -r 0775 /opt/code
+cp -r /opt/code/* /opt/env
 /bin/bash /run.sh $language $prog

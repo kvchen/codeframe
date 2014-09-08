@@ -19,7 +19,7 @@ case "$language" in
 		python3 $prog
 		;;
 	"scheme")
-		racket -p dyoo/simply-scheme:2:2 -f $prog
+		racket -f $prog
 		;;
 	*)
 		echo "Unrecognized language!"

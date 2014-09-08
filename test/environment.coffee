@@ -33,7 +33,9 @@ describe "POST /api/environment/run with malformed files", ->
           contents: "from bar.baz import qux\nqux()"
           ,
           name: "bar", 
-          contents: {"name": "__init__.py", "contents": ""}
+          contents:
+            name: "__init__.py"
+            contents: ""
         ]
       .end (err, res) ->
         should.not.exist err

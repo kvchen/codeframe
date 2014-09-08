@@ -2,7 +2,7 @@ oauth2orize = require "oauth2orize"
 passport    = require "passport"
 crypto      = require "crypto"
 
-models       = require "../models"
+models       = require("../models").users
 User         = models.User
 AccessToken  = models.AccessToken
 RefreshToken = models.RefreshToken

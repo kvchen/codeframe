@@ -31,11 +31,14 @@ createVolume = (files, cb) ->
   envUUID = uuid.v4()
 
   basePath = path.dirname(require.main.filename)
-  volume = path.join basePath, 'uploads', envUUID
+  volume = path.join basePath, "tmp", envUUID
 
   fileSchema = Joi.object().keys
-    name: Joi.string().alphanum().min(1).max(255).required()
-    contents: [Joi.string(), Joi.array()], 
+    name: Joi.string().regex(/^[\w\-. ]+$/).required()
+    contents: [
+      Joi.string()
+      Joi.array()
+    ]
 
   writeVolume volume, 0, files, fileSchema, (err) ->
     return cb err if err
@@ -49,7 +52,7 @@ writeVolume = (dir, depth, files, fileSchema, cb) ->
     winston.info "Created directory %s", dir
 
     if depth > 10
-      return cb new Error "Maximum recusion depth exceeded"
+      return cb new Error "Maximum path depth exceeded"
 
     folderSchema = Joi.array().includes(fileSchema)
     Joi.validate files, folderSchema, (err, value) ->
@@ -76,15 +79,19 @@ writeVolume = (dir, depth, files, fileSchema, cb) ->
 
 
 runContainer = (language, entrypoint, volume, cb) -> 
-  binds = {}
-  binds[containerConfig.env] = {}
+  volumes = {}
+  volumes[containerConfig.code] = {}
+  volumes[containerConfig.env] = {}
 
   createOptions = 
     Image: containerConfig.image
     Memory: containerConfig.memory
     DisableNetwork: containerConfig.disableNetwork
-    Cmd: [language, path.join(containerConfig.env, entrypoint)]
-    Volumes: binds
+    Cmd: [
+      language
+      path.join containerConfig.env, entrypoint
+    ] 
+    Volumes: volumes
 
   attachOptions = 
     stream: true
@@ -93,7 +100,7 @@ runContainer = (language, entrypoint, volume, cb) ->
     tty: false
 
   startOptions = 
-    Binds: [volume + ":/opt/code:rw"]
+    Binds: ["#{volume}:#{containerConfig.code}:ro"]
 
   docker.createContainer createOptions, (err, container) ->
     winston.info "%s: Container created", container.id

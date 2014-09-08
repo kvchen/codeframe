@@ -42,7 +42,7 @@ clientSchema = new Schema
     unique: true
     required: true
   
-  clientId:
+  clientID:
     type: String
     unique: true
     required: true
@@ -56,11 +56,11 @@ Client = mongoose.model "Client", clientSchema
 
 
 accessTokenSchema = new Schema
-  userId:
+  userID:
     type: String
     required: true
 
-   clientId:
+   clientID:
     type: String
     required: true
   
@@ -82,7 +82,7 @@ refreshTokenSchema = new Schema
     type: String
     required: true
 
-  clientId:
+  clientID:
     type: String
     required: true
 

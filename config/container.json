@@ -3,7 +3,8 @@
   "disableNetwork": true, 
   "memory": 50e6, 
   "timeout": 1e4, 
-  "env": "/opt/code", 
+  "code": "/opt/code", 
+  "env": "/opt/env", 
   "output": {
     "stdout": true, 
     "stderr": true
