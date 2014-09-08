@@ -8,8 +8,8 @@
     "test": "./node_modules/.bin/mocha --compilers coffee:coffee-script/register --require coffee-script --colors"
   },
   "devDependencies": {
-    "chai": "^1.9.1", 
-    "faker": "^1.1.0", 
+    "chai": "^1.9.1",
+    "faker": "^1.1.0",
     "grunt": "^0.4.5",
     "grunt-contrib-jshint": "^0.10.0",
     "grunt-contrib-nodeunit": "^0.4.1",
@@ -27,6 +27,7 @@
     "fs-extra": "^0.11.1",
     "jade": "^1.6.0",
     "joi": "^4.6.2",
+    "memorystream": "^0.2.0",
     "mongoose": "^3.8.15",
     "morgan": "^1.3.0",
     "node-uuid": "^1.4.1",

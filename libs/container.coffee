@@ -1,4 +1,5 @@
 Docker   = require "dockerode"
+MemoryStream = require "memorystream"
 
 fs       = require "fs-extra"
 Joi      = require "joi"
@@ -109,26 +110,28 @@ runContainer = (language, entrypoint, volume, cb) ->
     container.attach attachOptions, (err, stream) ->
       return cb err if err
 
+      chunksRead = 0
+      timedOut = truncated = false
+      output = ""
+
+      memStream = new MemoryStream()
+      memStream.on "data", (data) ->
+        output += data
+        if ++chunksRead > 100
+          winston.warn "#{container.id}: Output truncated"
+          truncated = true
+          stream.destroy()
+
+      container.modem.demuxStream(stream, memStream, memStream);
+
       container.start startOptions, (err, data) ->
         return cb err if err
-
-        output = ""
-        chunksRead = 0
-        timedOut = truncated = false
 
         timeout = setTimeout (() ->
           winston.warn "%s: Code timed out", container.id
           timedOut = true
           stream.destroy()
         ), containerConfig.timeout
-
-        stream.on "data", (chunk) ->
-          output += chunk
-          chunksRead++
-          if chunksRead > 100
-            winston.warn "%s: Output truncated", container.id
-            truncated = true
-            stream.destroy()
 
         stream.on "end", () ->
           clearTimeout timeout
