@@ -12,15 +12,6 @@ Codeframe
 
 Codeframe provides a simple REST API for accessing product features.
 
-### Authentication
-
-Codeframe will use OAuth2 (not yet implemented) for authentication, allowing users to access the API on an application basis.
-
-| Resource | Description |
-| -------- | ----------- |
-| POST /oauth2/request_token | |
-| POST /oauth2/invalidate_token | |
-
 
 ### Execution
 
@@ -28,8 +19,28 @@ Allows users to run both short code snippets and longer, more comprehensive code
 
 | Resource | Description |
 | -------- | ----------- |
-| POST /api/snippet/run | Runs a snippet specified by language and contents. |
-| POST /api/environment/run | Runs an environment specified by language, entrypoint, and a series of JSON-encoded files and folders. |
+| POST /snippet/run | Runs a snippet specified by language and contents. |
+| POST /code/run | Runs an environment specified by language, entrypoint, and a series of JSON-encoded files and folders. |
+
+
+### Problems and Autograder (In-progress)
+
+Allows users to view problems, submit their answers, and view feedback.
+
+| Resource | Description |
+| -------- | ----------- |
+| GET /problems/:id | Returns a single problem, specified by the id parameter. |
+| POST /problems/check/:id | Submits code to the server for autograding. Returns the results of the autograder. |
+
+
+### Authentication (In-progress)
+
+Codeframe will use OAuth2 for authentication, allowing users to access the API on an application basis.
+
+| Resource | Description |
+| -------- | ----------- |
+| POST /oauth/token | |
+| POST /oauth/invalidate_token | |
 
 
 ## Installation
