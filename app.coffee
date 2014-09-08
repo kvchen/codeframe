@@ -4,6 +4,8 @@ bodyParser = require "body-parser"
 passport   = require "passport"
 winston    = require "winston"
 
+routes = require "./routes"
+
 # Remove logging for tests
 winston.remove winston.transports.Console if process.env.NODE_ENV is 'test'
 
@@ -11,23 +13,23 @@ winston.remove winston.transports.Console if process.env.NODE_ENV is 'test'
 # Define the Express app
 app = express()
 
-app.use express.static(__dirname + '/public')
+app.set "port", process.env.PORT or 3000
+app.set "views", __dirname + "/views"
+app.set "view engine", "jade"
+
+app.disable "x-powered-by"
+
+app.use express.static __dirname + "/public"
 app.use bodyParser.json()
 
-# Define auth middleware
-require "./libs/auth"
-app.use passport.initialize()
-app.use passport.session()
-
-# Initialize templating engine
-app.set 'views', __dirname + '/views'
-app.set 'view engine', 'jade'
 
 # Define view endpoints
-app.get '/', (req, res) ->
-  res.render 'index'
+app.get '/', routes.index
 
-environment = require "./routes/environment"
-app.post '/api/environment/run', environment.run
+
+# Define API endpoints
+app.post '/code/run', routes.code.run
+app.post '/snippet/run', routes.snippet.run
+
 
 module.exports = app

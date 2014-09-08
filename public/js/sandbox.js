@@ -24,18 +24,12 @@
       $("#output-container").text("Running code snippet...");
       params = JSON.stringify({
         language: language,
-        entrypoint: "snippet",
-        files: [
-          {
-            name: "snippet",
-            contents: editor.getValue()
-          }
-        ]
+        contents: editor.getValue()
       });
       return $.ajax({
         type: "POST",
         contentType: "application/json",
-        url: "/api/environment/run",
+        url: "/snippet/run",
         dataType: 'json',
         data: params,
         success: function(res) {

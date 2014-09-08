@@ -7,10 +7,10 @@ should = require "should"
 
 # All tests involving running containers have been disabled
 
-describe "POST /api/environment/run with invalid request", ->
+describe "POST /code/run with invalid request", ->
   it "should return 406 and status fail", (done) ->
     request(app)
-      .post "/api/environment/run"
+      .post "/code/run"
       .send
         language: "foobarbaz"
         entrypoint: "ep"
@@ -21,10 +21,10 @@ describe "POST /api/environment/run with invalid request", ->
         res.body.status.should.equal "failure"
         done()
 
-describe "POST /api/environment/run with malformed files", ->
+describe "POST /code/run with malformed files", ->
   it "should return 500 and status fail", (done) ->
     request(app)
-      .post "/api/environment/run"
+      .post "/code/run"
       .send
         language: "python3"
         entrypoint: "main.py"
@@ -43,7 +43,7 @@ describe "POST /api/environment/run with malformed files", ->
         res.body.status.should.equal "failure"
         done()
 
-describe "POST /api/environment/run with a valid environment", ->
+describe "POST /code/run with a valid environment", ->
   it "should return 200 and output execution results"
 
   ###
