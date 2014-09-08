@@ -27,13 +27,6 @@ app.set 'view engine', 'jade'
 app.get '/', (req, res) ->
   res.render 'index'
 
-oauth2 = require "./libs/oauth2"
-app.post "/oauth/token", oauth2.token
-app.post "/oauth/test", 
-  passport.authenticate("bearer", {session: false}), 
-  (req, res) ->
-    return res.send "testing!"
-
 environment = require "./routes/environment"
 app.post '/api/environment/run', environment.run
 

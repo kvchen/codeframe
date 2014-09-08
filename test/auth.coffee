@@ -32,18 +32,5 @@ describe "OAuth 2.0 endpoints",  ->
       userModels.Client.remove {}, ->
         done()
 
-  it "should return 200 and supply both an access token and a refresh token", (done) ->
-    request app
-      .post "/oauth/token"
-      .type "form"
-      .send
-        grant_type: "password"
-        client_id: "testApp"
-        username: "peterperfect"
-        password: "hunter2"
-      .end (err, res) ->
-        should.not.exist err
-        res.status.should.equal 200
-        done()
-
+  it "should return 200 and supply both an access token and a refresh token"
 
