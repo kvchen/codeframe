@@ -21,6 +21,9 @@ case "$language" in
 	"scheme")
 		racket -f $prog
 		;;
+	"logic")
+    python3 logic/logic.py $prog
+    ;;
 	*)
 		echo "Unrecognized language!"
 		exit 1
