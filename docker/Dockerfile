@@ -2,7 +2,7 @@ FROM ubuntu:14.04
 MAINTAINER Kevin Chen <kvchen@berkeley.edu>
 
 RUN apt-get update
-RUN apt-get install -y python python3 racket
+RUN apt-get install -y build-essential python python3 racket ruby
 
 ADD logic logic
 ADD entrypoint.sh entrypoint.sh

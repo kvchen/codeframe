@@ -1,4 +1,4 @@
-container = require "../libs/container"
+runner    = require "../libs/runner"
 languages = require "../config/languages.json"
 
 Joi       = require "joi"
@@ -18,14 +18,14 @@ exports.run = (req, res, next) ->
         status: "failure"
         message: err.message
     else
-      container.createVolume env.files, (err, volume) ->
+      runner.createVolume env.files, (err, volume) ->
         if err
           winston.error "Failed to create file volume: %s", err.message
           res.status(500).json
             status: "failure"
             message: err.message
         else
-          container.run env.language, env.entrypoint, volume, (err, data) ->
+          runner.run env.language, env.entrypoint, volume, (err, data) ->
             if err
               res.status(500).json
                 status: "failure"
