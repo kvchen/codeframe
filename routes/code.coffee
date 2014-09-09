@@ -20,10 +20,10 @@ exports.run = (req, res, next) ->
     else
       runner.createVolume env.files, (err, volume) ->
         if err
-          winston.error "Failed to create file volume: %s", err.message
+          winston.error "Failed to create temporary volume: %s", err.message
           res.status(500).json
             status: "failure"
-            message: err.message
+            message: "Failed to create temporary volume"
         else
           runner.run env.language, env.entrypoint, volume, (err, data) ->
             if err
