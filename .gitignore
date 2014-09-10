@@ -2,7 +2,7 @@
 .DS_Store
 
 # Uploaded environments
-bin/tmp/*
+tmp/*
 
 # Logs
 logs
