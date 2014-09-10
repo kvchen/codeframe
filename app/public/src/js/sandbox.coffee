@@ -31,17 +31,23 @@ $ ->
       type: "POST"
       contentType: "application/json"
       url: "/snippet/run"
-      dataType:'json'
+      dataType: "json"
       data: params
       success: (res) ->
         NProgress.done()
-        console.log "finished:"
-        console.log res
-        $('#output-container').text res.data.output
+        output = res.data.output
+
+        output += "[Process timed out]\n" if res.data.timedOut
+        output += "[Output truncated]\n" if res.data.truncated
+
+        output += "Program exited with code #{res.data.exitCode}"
+
+        $('#output-container').text output
         running = false
       error: (res) ->
         NProgress.done()
-        $('#output-container').text "Code failed to execute!"
+        console.log res
+        $('#output-container').text "Unable to reach server!"
         running = false
 
   editor.commands.addCommand

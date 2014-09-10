@@ -1,26 +1,26 @@
-runner    = require "../libs/runner"
-languages = require "../config/languages.json"
+runner = require "../libs/runner"
+config = require "../config"
 
-Joi       = require "joi"
-winston   = require "winston"
+Joi     = require "joi"
+logger = require "winston"
 
 exports.run = (req, res, next) ->
   schema = Joi.object().keys
-    language: Joi.valid(languages).required()
+    language: Joi.valid(config.runner.languages).required()
     entrypoint: Joi.string().required()
     files: Joi.array().includes(Joi.object()).required()
 
   env = req.body
   Joi.validate env, schema, (err, value) ->
     if err
-      winston.warn "Malformed request: %s", err.message
+      logger.warn "Malformed request: %s", err.message
       res.status(406).json
         status: "failure"
         message: err.message
     else
       runner.createVolume env.files, (err, volume) ->
         if err
-          winston.error "Failed to create temporary volume: %s", err.message
+          logger.error "Failed to create temporary volume: %s", err.message
           res.status(500).json
             status: "failure"
             message: "Failed to create temporary volume"

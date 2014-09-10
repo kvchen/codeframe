@@ -4,19 +4,26 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "./node_modules/.bin/coffee ./bin/www.coffee",
+    "start": "./node_modules/.bin/coffee ./server.coffee",
     "test": "./node_modules/.bin/mocha --compilers coffee:coffee-script/register --require coffee-script --colors"
   },
   "devDependencies": {
     "chai": "^1.9.1",
     "faker": "^1.1.0",
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-coffee": "^0.11.1",
+    "grunt-contrib-copy": "^0.5.0",
+    "grunt-contrib-jade": "^0.12.0",
+    "grunt-contrib-uglify": "^0.5.1",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-express-server": "^0.4.19",
     "mocha": "^1.21.4",
     "should": "^4.0.4",
     "supertest": "^0.13.0"
   },
   "dependencies": {
     "async": "^0.9.0",
-    "bcrypt": "^0.8.0",
     "body-parser": "^1.7.0",
     "coffee-script": "^1.8.0",
     "dockerode": "^2.0.3",
@@ -27,13 +34,10 @@
     "memorystream": "^0.2.0",
     "mongoose": "^3.8.15",
     "morgan": "^1.3.0",
+    "nconf": "^0.6.9",
     "node-uuid": "^1.4.1",
-    "oauth2orize": "^1.0.1",
-    "passport": "^0.2.1",
-    "passport-http": "^0.2.2",
-    "passport-http-bearer": "^1.0.1",
-    "passport-oauth2-client-password": "^0.1.2",
     "sanitize-filename": "^1.1.1",
+    "socket.io": "^1.1.0",
     "winston": "^0.7.3"
   }
 }

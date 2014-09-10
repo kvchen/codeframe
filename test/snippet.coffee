@@ -1,5 +1,5 @@
 process.env.NODE_ENV = "test"
-app = require "../app"
+app = require "../app/app"
 
 # Require HTTP testing modules
 request = require "supertest"

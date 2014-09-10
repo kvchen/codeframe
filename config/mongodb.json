@@ -1,5 +1,0 @@
-{
-  "uri": "mongodb://localhost/codeframe", 
-  "testUri": "mongodb://localhost/codeframe_test", 
-  "port" : 27017
-}
