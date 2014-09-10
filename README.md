@@ -10,7 +10,7 @@ Codeframe
 
 ## API
 
-Codeframe provides a simple REST API for accessing product features.
+Codeframe provides a simple REST API for accessing features.
 
 
 ### Execution
@@ -35,9 +35,9 @@ Codeframe will use OAuth2 for authentication, allowing users to access the API o
 
 ## Installation
 
-1. Run `cake build` to build a local copy of the Docker image
-4. Run `npm install` to install all dependencies
-5. Run `npm start` to start the server
+1. Run `grunt` to run through the asset pipeline
+2. Run `npm install` to install all Node dependencies
+3. Run `npm start` to start the server
 
 
 ## Special Thanks
