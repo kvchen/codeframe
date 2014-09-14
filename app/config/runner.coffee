@@ -1,6 +1,6 @@
 module.exports = 
   image: "runner"
-  languages: ["python", "python2", "python3", "scheme", "logic", "ruby", "c"]
+  languages: ["hog", "python", "python2", "python3", "scheme", "logic", "ruby", "c"]
   disableNetwork: true
   memory: 50e6
   timeout: 1e4

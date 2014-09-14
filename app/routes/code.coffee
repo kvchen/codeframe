@@ -1,7 +1,7 @@
 runner = require "../libs/runner"
 config = require "../config"
 
-Joi     = require "joi"
+Joi = require "joi"
 logger = require "winston"
 
 exports.run = (req, res, next) ->

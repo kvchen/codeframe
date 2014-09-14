@@ -4,11 +4,6 @@ bodyParser = require "body-parser"
 logger = require "./libs/logger"
 routes = require "./routes"
 
-
-# Remove logging for tests
-logger.remove logger.transports.Console if process.env.NODE_ENV is 'test'
-
-
 # Define the Express app
 app = express()
 

@@ -36,11 +36,11 @@ $ ->
       success: (res) ->
         NProgress.done()
         output = res.data.output
+        if output is ""
+          output += "\n\n"
 
         output += "[Process timed out]\n" if res.data.timedOut
         output += "[Output truncated]\n" if res.data.truncated
-
-        output += "Program exited with code #{res.data.exitCode}"
 
         $('#output-container').text output
         running = false
@@ -61,26 +61,50 @@ $ ->
 
   $(".toggle-python").on "click", (e) ->
     e.preventDefault()
+
+    $(".toggle-python").attr "href", "#"
+    $(".toggle-scheme").attr "href", "#"
+    $(".toggle-logic").attr "href", "#"
+    $(".toggle-hog").attr "href", "#"
+
     editor.getSession().setMode "ace/mode/python"
     language = "python3";
     $(this).removeAttr "href"
-    $(".toggle-scheme").attr "href", "#"
-    $(".toggle-logic").attr "href", "#"
 
   $(".toggle-scheme").on "click", (e) ->
     e.preventDefault();
+
+    $(".toggle-python").attr "href", "#"
+    $(".toggle-scheme").attr "href", "#"
+    $(".toggle-logic").attr "href", "#"
+    $(".toggle-hog").attr "href", "#"
+
     editor.getSession().setMode "ace/mode/scheme"
     language = "scheme"
     $(this).removeAttr "href"
-    $(".toggle-python").attr "href", "#"
-    $(".toggle-logic").attr "href", "#"
 
   $(".toggle-logic").on "click", (e) ->
     e.preventDefault();
+
+    $(".toggle-python").attr "href", "#"
+    $(".toggle-scheme").attr "href", "#"
+    $(".toggle-logic").attr "href", "#"
+    $(".toggle-hog").attr "href", "#"
+
     editor.getSession().setMode "ace/mode/scheme"
     language = "logic"
     $(this).removeAttr "href"
+  
+  $(".toggle-hog").on "click", (e) ->
+    e.preventDefault();
+
     $(".toggle-python").attr "href", "#"
     $(".toggle-scheme").attr "href", "#"
+    $(".toggle-logic").attr "href", "#"
+    $(".toggle-hog").attr "href", "#"
+
+    editor.getSession().setMode "ace/mode/python"
+    language = "hog"
+    $(this).removeAttr "href"
 
 

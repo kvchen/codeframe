@@ -15,8 +15,13 @@ case "$language" in
     "c")
         gcc $prog && ./a.out
         ;;
+    "hog")
+        cp /opt/includes/hog/* /opt/env
+        mv /opt/env/snippet /opt/env/snippet.py
+        python3 /opt/env/autograder.py
+        ;;
     "logic")
-        python3 logic/logic.py $prog
+        python3 /opt/includes/logic/logic.py $prog
         ;;
     "python2")
         python2 $prog

@@ -35,13 +35,15 @@
           var output;
           NProgress.done();
           output = res.data.output;
+          if (output === "") {
+            output += "\n\n";
+          }
           if (res.data.timedOut) {
             output += "[Process timed out]\n";
           }
           if (res.data.truncated) {
             output += "[Output truncated]\n";
           }
-          output += "Program exited with code " + res.data.exitCode;
           $('#output-container').text(output);
           return running = false;
         },
@@ -64,27 +66,43 @@
     $('#run').on('click', runSnippet);
     $(".toggle-python").on("click", function(e) {
       e.preventDefault();
+      $(".toggle-python").attr("href", "#");
+      $(".toggle-scheme").attr("href", "#");
+      $(".toggle-logic").attr("href", "#");
+      $(".toggle-hog").attr("href", "#");
       editor.getSession().setMode("ace/mode/python");
       language = "python3";
-      $(this).removeAttr("href");
-      $(".toggle-scheme").attr("href", "#");
-      return $(".toggle-logic").attr("href", "#");
+      return $(this).removeAttr("href");
     });
     $(".toggle-scheme").on("click", function(e) {
       e.preventDefault();
+      $(".toggle-python").attr("href", "#");
+      $(".toggle-scheme").attr("href", "#");
+      $(".toggle-logic").attr("href", "#");
+      $(".toggle-hog").attr("href", "#");
       editor.getSession().setMode("ace/mode/scheme");
       language = "scheme";
-      $(this).removeAttr("href");
-      $(".toggle-python").attr("href", "#");
-      return $(".toggle-logic").attr("href", "#");
+      return $(this).removeAttr("href");
     });
-    return $(".toggle-logic").on("click", function(e) {
+    $(".toggle-logic").on("click", function(e) {
       e.preventDefault();
+      $(".toggle-python").attr("href", "#");
+      $(".toggle-scheme").attr("href", "#");
+      $(".toggle-logic").attr("href", "#");
+      $(".toggle-hog").attr("href", "#");
       editor.getSession().setMode("ace/mode/scheme");
       language = "logic";
-      $(this).removeAttr("href");
+      return $(this).removeAttr("href");
+    });
+    return $(".toggle-hog").on("click", function(e) {
+      e.preventDefault();
       $(".toggle-python").attr("href", "#");
-      return $(".toggle-scheme").attr("href", "#");
+      $(".toggle-scheme").attr("href", "#");
+      $(".toggle-logic").attr("href", "#");
+      $(".toggle-hog").attr("href", "#");
+      editor.getSession().setMode("ace/mode/python");
+      language = "hog";
+      return $(this).removeAttr("href");
     });
   });
 
