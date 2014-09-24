@@ -2,29 +2,29 @@ async    = require "async"
 fs       = require "fs-extra"
 Joi      = require "joi"
 path     = require "path"
-sanitize = require "sanitize-filename"
-winston  = require "winston"
 uuid     = require "node-uuid"
+winston  = require "winston"
 
-createVolume = (files, cb) ->
-  envUUID = uuid.v4()
 
-  basePath = path.dirname require.main.filename
-  volume = path.join basePath, "tmp", envUUID
+# Specify a schema for each object in the file array
+fileSchema = Joi.object().keys
+  name: Joi.string().regex(/^[\w\-. ]+$/).required()
+  contents: [Joi.string(), Joi.array()]
 
-  fileSchema = Joi.object().keys
-    name: Joi.string().regex(/^[\w\-. ]+$/).required()
-    contents: [
-      Joi.string()
-      Joi.array()
-    ]
 
-  writeVolume volume, 0, files, fileSchema, (err) ->
+createVolume = (files, dir, cb) ->
+  writeFiles files, dir, 0, fileSchema, (err) ->
     return cb err if err
-    cb null, volume
+    cb null
 
 
-writeVolume = (dir, depth, files, fileSchema, cb) ->
+removeVolume = (dir, cb) ->
+  fs.remove dir, (err) ->
+    return cb err if err
+    cb null
+
+
+writeFiles = (files, dir, depth, fileSchema, cb) ->
   fs.mkdirs dir, (err) ->
     return cb new Error "Unable to create directory #{dir}" if err
     return cb new Error "Maximum path depth exceeded" if depth > 10
@@ -33,10 +33,13 @@ writeVolume = (dir, depth, files, fileSchema, cb) ->
       Joi.validate file, fileSchema, (err, value) ->
         return cb err if err
 
+        # If the contents of our file are more files, treat it like a folder
         if file.contents instanceof Array
-          writeVolume path.join(dir, file.name), depth+1, file.contents, (err) ->
+          writeFiles path.join(dir, file.name), depth+1, file.contents, (err) ->
             return cb err if err
             cb null, null
+
+        # Otherwise, write the contents of the file as a file
         else
           fs.writeFile path.join(dir, file.name), file.contents, (err) ->
             return cb err if err
@@ -45,4 +48,6 @@ writeVolume = (dir, depth, files, fileSchema, cb) ->
       return cb new Error "Unable to write files" if err
       cb null
 
-module.exports.createVolume = createVolume
+
+exports.create = createVolume
+exports.remove = removeVolume

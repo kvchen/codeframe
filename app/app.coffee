@@ -22,8 +22,8 @@ app.get '/', routes.index
 
 
 # Define API endpoints
-app.post '/code/run', routes.code.run
-app.post '/snippet/run', routes.snippet.run
+app.get '/sandbox', routes.sandbox.index
+app.post '/sandbox/run', routes.sandbox.run
 
 
 # Export app for other modules to use

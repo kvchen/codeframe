@@ -1,8 +1,6 @@
-code = require "./code"
-snippet = require "./snippet"
+sandbox = require "./sandbox"
 
-exports.code = code
-exports.snippet = snippet
+module.exports.sandbox = sandbox
 
 exports.index = (req, res) ->
-  res.render 'index'
+  res.render 'sandbox'

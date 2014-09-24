@@ -19,24 +19,28 @@ $ ->
   runSnippet = () ->
     return if running
 
-    NProgress.start()
     running = true
+    NProgress.start()
 
-    $("#output-container").text "Running code snippet..."
+    $("#output-container").text "Running your code..."
     params = JSON.stringify
       language: language
-      contents: editor.getValue()
+      entrypoint: "snippet"
+      files: [
+        name: "snippet"
+        contents: editor.getValue()
+      ]
 
     $.ajax
       type: "POST"
       contentType: "application/json"
-      url: "/snippet/run"
+      url: "/sandbox/run"
       dataType: "json"
       data: params
       success: (res) ->
         NProgress.done()
         output = res.data.output
-        if output is ""
+        if output is not ""
           output += "\n\n"
 
         output += "[Process timed out]\n" if res.data.timedOut

@@ -34,6 +34,7 @@
     "mongoose": "^3.8.16",
     "node-uuid": "^1.4.1",
     "sanitize-filename": "^1.1.1",
+    "shortid": "^2.0.1",
     "socket.io": "^1.1.0",
     "winston": "^0.7.3"
   }

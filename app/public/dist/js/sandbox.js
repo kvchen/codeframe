@@ -18,24 +18,30 @@
       if (running) {
         return;
       }
-      NProgress.start();
       running = true;
-      $("#output-container").text("Running code snippet...");
+      NProgress.start();
+      $("#output-container").text("Running your code...");
       params = JSON.stringify({
         language: language,
-        contents: editor.getValue()
+        entrypoint: "snippet",
+        files: [
+          {
+            name: "snippet",
+            contents: editor.getValue()
+          }
+        ]
       });
       return $.ajax({
         type: "POST",
         contentType: "application/json",
-        url: "/snippet/run",
+        url: "/sandbox/run",
         dataType: "json",
         data: params,
         success: function(res) {
           var output;
           NProgress.done();
           output = res.data.output;
-          if (output === "") {
+          if (output === !"") {
             output += "\n\n";
           }
           if (res.data.timedOut) {

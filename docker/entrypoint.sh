@@ -1,6 +1,6 @@
 language=$1
 prog=$2
 
-cp -r /opt/code/* /opt/env
+cp -r /opt/runner/code/* /opt/runner/env
 
 /bin/bash /run.sh $language $prog

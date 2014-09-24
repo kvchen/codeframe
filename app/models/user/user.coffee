@@ -1,7 +1,6 @@
 bcrypt   = require "bcrypt"
 mongoose = require "mongoose"
 
-
 Schema = mongoose.Schema
 
 userSchema = new Schema
@@ -33,9 +32,6 @@ userSchema.virtual "password"
     this.passwordHash = this.encryptPassword password
 
 
-User = mongoose.model "User", userSchema
-
-
 clientSchema = new Schema
   name:
     type: String
@@ -50,9 +46,6 @@ clientSchema = new Schema
   clientSecret:
     type: String
     required: true
-
-
-Client = mongoose.model "Client", clientSchema
 
 
 accessTokenSchema = new Schema
@@ -74,9 +67,6 @@ accessTokenSchema = new Schema
     default: Date.now
 
 
-AccessToken = mongoose.model "AccessToken", accessTokenSchema
-
-
 refreshTokenSchema = new Schema
   userId:
     type: String
@@ -96,6 +86,9 @@ refreshTokenSchema = new Schema
     default: Date.now
 
 
+User = mongoose.model "User", userSchema
+Client = mongoose.model "Client", clientSchema
+AccessToken = mongoose.model "AccessToken", accessTokenSchema
 RefreshToken = mongoose.model "RefreshToken", refreshTokenSchema
 
 module.exports.User = User
