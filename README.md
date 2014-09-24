@@ -19,8 +19,7 @@ Allows users to run both short code snippets and longer, more comprehensive code
 
 | Resource | Description |
 | -------- | ----------- |
-| POST /snippet/run | Runs a snippet specified by language and contents. |
-| POST /code/run | Runs an environment specified by language, entrypoint, and a series of JSON-encoded files and folders. |
+| POST /sandbox/run | Runs a sandbox environment specified by language, entrypoint, and a series of JSON-encoded files and folders. |
 
 
 ### Authentication (In-progress)
@@ -35,7 +34,7 @@ Codeframe will use OAuth2 for authentication, allowing users to access the API o
 
 ## Installation
 
-1. Run `grunt` to run through the asset pipeline
+1. Run `grunt` to compile all assets
 2. Run `npm install` to install all Node dependencies
 3. Run `npm start` to start the server
 
