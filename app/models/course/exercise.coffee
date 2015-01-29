@@ -6,6 +6,10 @@ exerciseSchema = new Schema
     type: String
     required: true
 
+  language:
+    type: String
+    required: true
+
   summary:
     type: String
     required: true

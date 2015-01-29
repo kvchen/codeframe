@@ -3,6 +3,7 @@
 
 # Uploaded environments
 tmp/*
+docker/hog/*
 
 # Logs
 logs
